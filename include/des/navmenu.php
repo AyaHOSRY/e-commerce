@@ -1,4 +1,8 @@
-<!DOCTYPE html>
+<?php
+session_start();
+include 'connect.php';
+
+?><!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -65,7 +69,23 @@
 <ul class="navbar-nav ml-auto"> 
 <li class="nav-item"><a class="nav-link" href="cart.php"> <i class="fas fa-dolly-flatbed mr-1 text-gray"></i>Cart<small class="text-gray">(2)</small></a></li>
 <li class="nav-item"><a class="nav-link" href="#"> <i class="far fa-heart mr-1"></i><small class="text-gray"> (0)</small></a></li>
-<li class="nav-item"><a class="nav-link" href="#"> <i class="fas fa-user-alt mr-1 text-gray"></i>Login</a></li>
+<?php 
+if (isset($_SESSION['login'])) {
+	$name_login =  $_SESSION['login'];
+$sql = "SELECT * FROM users  WHERE email = '$name_login' " ;
+$result =$conn->query($sql); 
+ $row = $result->fetch_assoc();
+	?>
+<li class="nav-item"><a class="nav-link" href="#"> <i class="fas fa-user-alt mr-1 text-gray"></i>Hi <?=$row['name'];?></a></li>
+<?php
+}else{
+	?>
+	<li class="nav-item"><a class="nav-link" href="../vvv/login/login.php"> <i class="fas fa-user-alt mr-1 text-gray"></i>Login</a></li>
+	<?php
+}
+
+?>
+
 </ul>
 </div>
 </nav>
